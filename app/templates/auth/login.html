@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Login{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Login</h1>
+</div>
+<div class="col-md-4">
+    <form action="" method="post" class="form">
+        <div class="form-group">
+            <label class="control-label" for="email">Email</label>
+            <input class="form-control" id="email" type="text" name="email" value="">
+        </div>
+        <div class="form-group">
+            <label for="control-label" for="password">password</label>
+            <input class="form-control" id="password" type="password" name="password">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input id="remember_me" name="remember_me" type="checkbox" value="True"> Keep me logged in
+            </label>
+        </div>
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </div>
+    </form>
+    <br>
+    <p>Forgot your password? <a href="{{ url_for('auth.password_reset_request') }}">Click here to reset it</a>.</p>
+    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+</div>
+{% endblock %}
