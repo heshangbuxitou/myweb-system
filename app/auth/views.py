@@ -5,6 +5,7 @@ from ..models import User
 from .. import db
 from flask_login import login_user, logout_user, login_required
 import re
+import json
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -57,6 +58,16 @@ def logout():
     logout_user()
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
+
+@auth.route('/validate', methods=['GET', 'POST'])
+def validate():
+    if(request.args.get('username')):
+        if User.query.filter_by(username=request.args.get('username')).first() is not None:
+            return json.dumps([True])
+    elif(request.args.get('email')):
+        if User.query.filter_by(email=request.args.get('email')).first() is not None:
+            return json.dumps([True])
+    return json.dumps([False])
 
 @auth.route('/reset', methods=['GET', 'POST'])
 def password_reset_request():
