@@ -1,11 +1,19 @@
 from . import auth
 from flask import render_template,redirect,url_for
 from flask import request,flash,make_response
-from ..models import User
+from ..models import User, Comment
 from .. import db
 from flask_login import login_user, logout_user, login_required, current_user
 import re
 import json
+
+@auth.before_app_request
+def before_requesg():
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.admin and (request.endpoint == 'main.editpost' or request.endpoint == 'main.modifypost'):
+            flash('你没有访问的权限!')
+            return redirect(url_for('main.index'))
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -92,8 +100,8 @@ def register():
     if request.method == 'POST':
         login_data = request.form.to_dict()
         if login_data['email']!='' and login_data['username']!='' and  \
-                                login_data['password']!='' and not User.validate_email(login_data['email'] and \
-                                not User.validate_username(login_data['username']) and login_data['password']!=login_data['password2']) and \
+                                login_data['password']!='' and not User.validate_email(login_data['email']) and \
+                                not User.validate_username(login_data['username']) and login_data['password']==login_data['password2'] and \
                              re.findall(r'(^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$)',login_data['email']):
             user = User(email=login_data['email'],
                     username=login_data['username'],

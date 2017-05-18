@@ -6,32 +6,28 @@
 <main class="container">
     <div class="row">
         <div class="col-sm-9 col-xs-12 blog-main">
-            <article class="blog-post">
+            <article class="blog-post font_con">
                 <h3 class="blog-post-title"><a href="#">{{ post.title }}</a></h3>
                 <p class="blog-post-meta">发表于 <time>{{ post.timestamp }}</time></p>
                 <p>{{ post.content|safe }}</p>
-                <hr class="divider" />
+                <!--<hr class="divider" />-->
+                {% if current_user.admin %}
+                    <span class="pull-right"><a href="{{ url_for('main.modifypost', id=post.id)}}">修改文章</a></span>
+                {% endif %}
             </article>
             <div class="container" id="blog">
                 {% if current_user.is_authenticated %}
                 <h4>添加评论</h4>
 
                 <div class="row">
-                    <div class="alert alert-danger" hidden="hidden" style="margin: 15px;">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <span class="sr-only">Error:</span>
-                        <span v-text="message"></span>
-                    </div>
-                    <form class="form col-sm-6" v-on:submit.prevent="submit">
+                    <form class="form col-sm-6" action="{{ url_for('main.addcomment', id=post.id) }}" method="post">
                         <div class="form-group">
-                            <label class="sr-only" for="comment">内容</label>
-                            <textarea class="form-control" rows="15" id="comment" name="comment" placeholder="内容" v-model="comment"></textarea>
+                            <textarea class="form-control comment" rows="13" id="comment" name="content" placeholder="内容"></textarea>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary">Submit</button>
+                            <button type="submit">Submit</button>
                         </div>
                     </form>
-                    <div class="col-sm-6 pre-scrollable" v-html="comment|marked"></div>
                 </div>
 
                 {% else %}
@@ -41,7 +37,7 @@
 
                 <h4>最新评论</h4>
                 <ul class="media-list">
-                    <li class="media" v-for="c in comments" track-by="id">
+                    <!--<li class="media" v-for="c in comments" track-by="id">
                         <div class="media-left">
                             <img class="media-object img-thumbnail" :src="c.user_image" alt="user_image" width="150" height="150"/>
                         </div>
@@ -54,7 +50,26 @@
                             </article>
                         </div>
                         <hr class="divider"/>
+                    </li>-->
+                    <li class="media">
+                        {% for comment in comments %}
+                        <div class="col-md-12 ">
+                            <div class="media-left">
+                                <img class="media-object img-thumbnail" src="{{ comment.user_image }}" alt="user_image" width="150" height="150" />
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading" ></h4>
+                                <small>发表于 {{ comment.created_at }}</small>
+                                <hr class="divider"/>
+                                <article>
+                                    <p>{{ comment.content }}</p>
+                                </article>
+                            </div>
+                        </div>
+                            
+                        {% endfor %}
                     </li>
+
                 </ul><!-- media-list -->
             </div>
         </div>

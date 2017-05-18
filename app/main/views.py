@@ -4,7 +4,7 @@ from flask import request, flash
 from flask_login import current_user
 from . import main
 from .. import db
-from ..models import User, Post
+from ..models import User, Post, Comment
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -27,10 +27,34 @@ def editpost():
         return redirect(url_for('main.index'))
     return render_template('blog_edit.html')
 
+@main.route('/modifypost/<int:id>', methods=['GET', 'POST'])
+def modifypost(id):
+    if request.method == 'GET':
+        post = Post.query.get_or_404(id)
+        return render_template('blog_modify.html', post=post)
+    else:
+        post = Post.query.get_or_404(id)
+        post.title = request.form['title']
+        post.content = request.form['content']
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('main.post', id=id))
+
 @main.route('/post/<id>')
 def post(id):
     post = Post.query.filter_by(id=id).first()
     if post:
-        return render_template('post.html', post=post)
+        comments = Comment.query.filter_by(post_id=id).all()
+        return render_template('post.html', post=post, comments=comments)
     flash("i don't have this post,please visit other post")
     return redirect(url_for('main.index'))
+
+@main.route('/addcomment/<int:id>', methods=['GET', 'POST'])
+def addcomment(id):
+    print ('yifangwen',request.form['content'])
+    post = Post.query.get_or_404(id)
+    comment = Comment(post=post, user=current_user._get_current_object(),
+                user_name=current_user.username, user_image=current_user.gravator(), content=request.form['content'])
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('main.post', id=id))
