@@ -3,7 +3,7 @@ from flask import render_template,redirect,url_for
 from flask import request,flash,make_response
 from ..models import User
 from .. import db
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 import re
 import json
 

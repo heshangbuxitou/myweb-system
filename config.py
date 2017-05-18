@@ -5,7 +5,8 @@ class Config(object):
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:root@localhost:3306/test'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    
+    FLASKY_POSTS_PER_PSGE = 10
+
     @staticmethod
     def init_app(app):
         pass

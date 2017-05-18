@@ -1,9 +1,71 @@
 {% extends "base.html" %}
 
-{% block title %}Flasky{% endblock %}
+{% block title %}日志{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
     <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
 </div>
+
+<main class="container">
+    <div class="row">
+        <div class="col-sm-9 col-xm-12 blog-main">
+            {% for post in posts %}
+                <article class="blog-post">
+                    <h3 class="blog-post-title"><a href="{{ url_for('main.post', id=post.id)}}">{{ post.title }}</a></h3>
+                    <p class="blog-post-meta"><small>发表于 {{ post.timestamp }}</small></p>
+                    <div class="container-fluid blog-summary cont" >
+                        {{ post.content|safe }}
+                    </div>
+                    <span class="pull-right"><a href="{{ url_for('main.post', id=post.id)}}">阅读更多</a></span>
+
+                    <hr class="divider"/>
+                </article>
+            {% endfor %}
+        </div>
+        
+        <div class="col-sm-3 hidden-xs h1 text-center">
+            {% if current_user.is_authenticated %}
+            <img src="{{ current_user.gravator() }}" alt="user_image" class="img-thumbnail img-respinsuve" width="150" height="150"/>
+            {% else %}
+            <img src="/static/img/user.png" alt="user_image" class="img-thumbnail img-respinsuve" width="150" height="150"/>
+            {% endif %}
+        </div>
+
+        <div class="col-xs-12">
+            <nav class="text-center">
+                <ul class="pagination">
+                    <li {% if not pagination.has_prev %} class="disabled" {% endif %}>
+                        <a href="{% if pagination.has_prev %}{{ url_for('main.index',
+                            page = pagination.page-1 ) }}{% else %}#{% endif %}">
+                            &laquo;
+                        </a>
+                    </li>
+                    {% for p in pagination.iter_pages() %}
+                        {% if p %}
+                            {% if p == pagination.page %}
+                                <li class="active">
+                                    <a href="{{ url_for('main.index', page = p) }}">{{ p }}</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ url_for('main.index', page = p) }}">{{ p }}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="disabled"><a href="#">&hellip;</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li {% if not pagination.has_next %} class="disabled" {% endif %}>
+                        <a href="{% if pagination.has_next %}{{ url_for('main.index',
+                            page = pagination.page+1 ) }}{% else %}#{% endif %}">
+                            &raquo;
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+ </div><!-- .row -->
+</main>
 {% endblock %}
