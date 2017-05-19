@@ -52,11 +52,21 @@ class User(UserMixin,db.Model):
                      location=forgery_py.address.city(),
                      about_me=forgery_py.lorem_ipsum.sentence(),
                      member_since=forgery_py.date.date(True))
-            db.session.add(u)
+            db.session.add(u)    #因为forgery可能生成相同的邮件名或者用户名所以需要捕捉异常
             try:
                 db.session.commit()
             except IntegrityError:
                 db.session.rollback()
+        
+        u = User(email='1581277795@qq.com',
+                     username='heshangbuxitou',
+                     password='123456',
+                     admin=True)
+        db.session.add(u)    #因为forgery可能生成相同的邮件名或者用户名所以需要捕捉异常
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
 
     def gravator(self, size=100, default='identicon', rating='g'):
         url = 'http://www.gravatar.com/avatar'
@@ -103,7 +113,7 @@ class Post(db.Model):
                      content=forgery_py.lorem_ipsum.sentences(randint(3, 30)),
                      author=u)
             db.session.add(p)
-            db.session.commit()
+        db.session.commit()
 
     def __repr__(self):
         return '<Post {}>'.format(self.title)
@@ -117,6 +127,22 @@ class Comment(db.Model):
     user_image = db.Column(db.String(500), nullable=False)
     content = db.Column(db.Text(), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    @staticmethod
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py
+
+        seed()
+        user_count = User.query.count()
+        post_count = Post.query.count()
+        for i in range(count):
+            u = User.query.offset(randint(0,user_count-1)).first()
+            p = Post.query.offset(randint(0,user_count-1)).first()
+            c = Comment(user=u, post=p, user_name=u.username,
+                    user_image=u.gravator(),content=forgery_py.lorem_ipsum.sentences(randint(3, 10)))
+            db.session.add(c)
+        db.session.commit()
 
     def __repr__(self):
         return '<Comment {}>'.format(self.content)

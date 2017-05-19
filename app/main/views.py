@@ -51,7 +51,6 @@ def post(id):
 
 @main.route('/addcomment/<int:id>', methods=['GET', 'POST'])
 def addcomment(id):
-    print ('yifangwen',request.form['content'])
     post = Post.query.get_or_404(id)
     comment = Comment(post=post, user=current_user._get_current_object(),
                 user_name=current_user.username, user_image=current_user.gravator(), content=request.form['content'])
