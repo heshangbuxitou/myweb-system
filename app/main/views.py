@@ -77,3 +77,31 @@ def deletepost(id):
 @main.route('/about')
 def about():
     return render_template('about.html')
+
+@main.route('/manage/<tablename>')
+def manage(tablename):
+    page=request.args.get('page', 1, type=int)
+    if tablename == 'posts':
+        # posts = Post.query.all()
+        pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_POSTS_PER_PSGE'],
+        error_out=True
+        )
+        posts = pagination.items
+        return render_template('manage.html', table=posts, pagination=pagination)
+    elif tablename == 'comments':
+        # comments = Comment.query.all()
+        pagination = Comment.query.order_by(Comment.created_at.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_POSTS_PER_PSGE'],
+        error_out=True
+        )
+        comments = pagination.items
+        return render_template('manage.html', table=comments, pagination=pagination)
+    else:
+        # users=User.query.all()
+        pagination = User.query.order_by(User.member_since.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_POSTS_PER_PSGE'],
+        error_out=True
+        )
+        users = pagination.items
+        return render_template('manage.html', table=users, pagination=pagination)

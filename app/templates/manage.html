@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage{% endblock %}
+
+{% block page_content %}
+
+
+<div class="row" id="vm" style="margin-top: 20px">
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs">
+            <li {% if table[0].email %}class="active"{% endif %}><a href="users">users</a></li>
+            <li {% if table[0].title %}class="active"{% endif %}><a href="posts">posts</a></li>
+            <li {% if table[0].user %}class="active"{% endif %}><a href="comments">comments</a></li>
+        </ul>
+        <table class="table table-striped table-hover table-responsive" id="manage-table">
+            <thead>
+                <tr>
+                    <th>{% if table[0].email %}名字{% elif table[0].title %}标题{% else %}作者{% endif %}</th>
+                    <th>{% if table[0].email %}电子邮箱{% elif table[0].title %}作者{% else %}内容{% endif %}</th>
+                    <th class="col-sm-2">创建时间</th>
+                    <th class="col-sm-1">操作</th>
+                    <!-- <th class="col-sm-1">操作</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% if table[0].email %}
+                    {% for i in table %}
+                        <tr>
+                            <td>
+                                <!--<a></a>-->
+                                <span>{{ i.username }}</span>
+                            </td>
+                            <td>
+                                <span>{{ i.email }}</span>
+                            </td>
+                            <td>{{ i.member_since }}</td>
+                            <td>
+                            <!-- <td> -->
+                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% elif table[0].title %}
+                    {% for i in table %}
+                        <tr>
+                            <td>
+                                <!--<a></a>-->
+                                <span>{{ i.title }}</span>
+                            </td>
+                            <td>
+                                <span>{{ i.author.username }}</span>
+                            </td>
+                            <td>{{ i.timestamp }}</td>
+                            <td>
+                            <!-- <td> -->
+                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for i in table %}
+                        <tr>
+                            <td>
+                                <!--<a></a>-->
+                                <span> {{i.user.username}} </span>
+                            </td>
+                            <td>
+                                <span>{{ i.content }}</span>
+                            </td>
+                            <td>{{ i.created_at }}</td>
+                            <td>
+                            <!-- <td> -->
+                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <!--<nav class="text-center">
+        <ul class="pagination">
+            <li :class="{'active': page.index===1}">
+                <a href="#" v-on:click="gotoPage(1)" v-text="1"></a>
+            </li>
+            <li class="disabled" v-if="(page.index - 1) > 3"><span>...</span></li>
+
+            <li :class="{'active': page.index===i}" v-for="i in page.last | filterBy vaildPage">
+                <a href="#" v-on:click="gotoPage(i)" v-text="i"></a>
+            </li>
+
+            <li class="disabled" v-if="(page.last - page.index) > 3"><span>...</span></li>
+            <li :class="{'active': page.index===page.last}" v-if="page.last > 1">
+                <a href="#" v-on:click="gotoPage(page.last)" v-text='page.last'></a>
+            </li>
+        </ul>
+    </nav>-->
+    {% include 'pagination.html' %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/manage.js"></script>
+{% endblock %}
