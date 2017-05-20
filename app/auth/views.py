@@ -7,14 +7,17 @@ from flask_login import login_user, logout_user, login_required, current_user
 import re
 import json
 
+#访问前拦截器 防止恶意访问一些特殊页面
 @auth.before_app_request
 def before_requesg():
     if current_user.is_authenticated:
         current_user.ping()
-        if not current_user.admin and (request.endpoint == 'main.editpost' or request.endpoint == 'main.modifypost'):
+        if not current_user.admin and (request.endpoint in ['main.editpost','main.modifypost','main.deletepost']):
+            print(request.endpoint in ['main.editpost','main.modifypost','main.deletepost'])
             flash('你没有访问的权限!')
             return redirect(url_for('main.index'))
 
+#登录页面
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -28,6 +31,7 @@ def login():
         flash('无效的用户名或者密码.')
     return render_template('auth/login.html')
 
+#注销页面
 @auth.route('/logout')
 @login_required
 def logout():
@@ -35,6 +39,7 @@ def logout():
     flash('You have been logged out.')
     return redirect(url_for('main.index'))
 
+#ajax验证用户名和email是否重复
 @auth.route('/validate', methods=['GET', 'POST'])
 def validate():
     if(request.args.get('username')):
@@ -45,6 +50,7 @@ def validate():
             return json.dumps([True])
     return json.dumps([False])
 
+#注册页面
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
