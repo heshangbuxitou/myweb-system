@@ -73,3 +73,7 @@ def deletepost(id):
     post = Post.query.get_or_404(id)
     db.session.delete(post)
     return redirect(url_for('main.index'))
+
+@main.route('/about')
+def about():
+    return render_template('about.html')

@@ -64,6 +64,7 @@ color: #999;
     background-color: #eee;
     border-top: 1px solid #ccc;
     padding-top: 20px;
+    text-align: center;
 }
 
 /* 小屏幕（平板，大于等于768像素） */

@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/static/img/favicon.ico"/>
+    <link rel="bookmark" href="/static/img/favicon.ico"/>
+    <title>关于</title>
+    <link rel="stylesheet" href="/static/css/mblog.css">
+</head>
+<body>
+<main id="about">
+    <h3>关于我</h3>
+        一个自学者，逻辑思维好，能快速实现业务逻辑以及所需求的功能。
+学习和仿写能力较好，阅读过一些优秀的框架源码，能快速的理解架构以及思路和原理，并且有意识的在自己的代码中使用。
+对新技术热情，喜欢浏览github，CSDN,一些好的python博客，对代码有洁癖，喜欢重构，善于模块化代码，有良好的异常捕捉意识。
+
+    <hr>
+    <h3>关于这里</h3>
+
+    <p>
+        这是我的一个博客，我会在这里放一些我在学习过程中踩过的坑或者感觉有用的的学习笔记
+    </p>
+
+    <hr>
+    <h3>做过的项目：</h3>
+    <ul id="project-list">
+        <li>
+            <a href="https://github.com/heshangbuxitou/myweb-system" target="_blank">MyBlog
+        </a>
+        本站的源代码
+        </li>
+        <li>
+            <a href="https://github.com/heshangbuxitou/yunUpload" target="_blank">FileSystem
+        </a>
+        一个用Flask实现的文件上传和下载系统</li>
+    </ul>
+    <hr>
+    <h3>联系我：</h3>
+    <ul>
+        <li>email: 1581277795@qq.com</li>
+        <li>GitHub: <a href="https://github.com/heshangbuxitou">https://github.com/heshangbuxitou</a> </li>
+    </ul>
+
+</main>
+
+    <footer id="footer">
+        <div>
+            <p><a href="{{ url_for('main.index')}}" target="_blank">blog主页</a>. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
