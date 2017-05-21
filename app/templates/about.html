@@ -1,53 +1,60 @@
-
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="/static/img/favicon.ico"/>
-    <link rel="bookmark" href="/static/img/favicon.ico"/>
-    <title>关于</title>
-    <link rel="stylesheet" href="/static/css/mblog.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon3.ico') }}" type="image/x-icon" />
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/resume.css') }}" media="screen" title="no title">
+  <title>about</title>
 </head>
 <body>
-<main id="about">
-    <h3>关于我</h3>
-        一个自学者，逻辑思维好，能快速实现业务逻辑以及所需求的功能。
-学习和仿写能力较好，阅读过一些优秀的框架源码，能快速的理解架构以及思路和原理，并且有意识的在自己的代码中使用。
-对新技术热情，喜欢浏览github，CSDN,一些好的python博客，对代码有洁癖，喜欢重构，善于模块化代码，有良好的异常捕捉意识。
-
-    <hr>
-    <h3>关于这里</h3>
-
-    <p>
-        这是我的一个博客，我会在这里放一些我在学习过程中踩过的坑或者感觉有用的的学习笔记
-    </p>
-
-    <hr>
-    <h3>做过的项目：</h3>
-    <ul id="project-list">
-        <li>
-            <a href="https://github.com/heshangbuxitou/myweb-system" target="_blank">MyBlog
-        </a>
-        本站的源代码
-        </li>
-        <li>
-            <a href="https://github.com/heshangbuxitou/yunUpload" target="_blank">FileSystem
-        </a>
-        一个用Flask实现的文件上传和下载系统</li>
-    </ul>
-    <hr>
-    <h3>联系我：</h3>
-    <ul>
-        <li>email: 1581277795@qq.com</li>
-        <li>GitHub: <a href="https://github.com/heshangbuxitou">https://github.com/heshangbuxitou</a> </li>
-    </ul>
-
-</main>
-
-    <footer id="footer">
-        <div>
-            <p><a href="{{ url_for('main.index')}}" target="_blank">blog主页</a>. All rights reserved.</p>
+  <div class="min-container">
+    <section class="section section-header">
+      <div class="sec-name container">
+        <img src="static/img/mytouxiang.jpg" alt="朱勇" />
+        <h1>关于我</h1>
+        <p>一个有梦想的年轻人，正在编程的世界中追求专业与卓越</p>
+        <ul>
+          <li>邮箱：1581277795@qq.com</li>
+          <li>Github：<a href="https://github.com/heshangbuxitou" target="_blank"> heshangbuxitou</a></li>
+          <li>Blog：<a href="http://sanyun.me:8080" target="_blank">sanyun.me</a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="section intro">
+      <div class="container">
+        <header class="col-md-4">
+          <h2>关于这里&nbsp;/&nbsp;Intro</h2>
+          <p>介绍一些基本情况</p>
+        </header>
+        <div class="section-content col-md-8">
+          <p>这是我的一个博客。</p>
+          <p>我是一个自学者，喜欢折腾，喜欢钻研新技术。</p>
+          <p>善于学习，模仿能力较好，阅读过一些优秀的框架源码。</p>
+          <p>对新技术热情，喜欢浏览github，CSDN,一些好的python博客，对代码有洁癖，喜欢重构，善于模块化代码。</p>
+          <p>这里会更新一些我在学习过程中的一些东西。</p>
         </div>
-    </footer>
+      </div>
+    </section>
+    <section class="section project">
+      <div class="container">
+        <header class="col-md-4">
+          <h2>作品 / Project</h2>
+          <p>我所参与做的一些作品和项目</p>
+        </header>
+        <div class="section-content col-md-8">
+          <p>博客： <a href="https://github.com/heshangbuxitou/myweb-system" target="_blank">https://github.com/heshangbuxitou/myweb-system </a></p>
+          <p>文件上传下载系统：<a href="https://github.com/heshangbuxitou/yunUpload" target="_blank"> https://github.com/heshangbuxitou/yunUpload</a></p>
+        </div>
+      </div>
+    </section>
+    <section class="section sheader">
+      <div class="container">
+        <p class="text-center"></p>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
