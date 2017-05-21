@@ -44,8 +44,8 @@
                             {% if current_user.admin %}
                                 <td>
                                 <!-- <td> -->
-                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <!--<a href=""><span class="glyphicon glyphicon-edit"></span></a>-->
+                                    <a href="{{url_for('main.delete', table='users', id=i.id)}}"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             {% endif %}
                         </tr>
@@ -54,8 +54,9 @@
                     {% for i in table %}
                         <tr>
                             <td>
-                                <!--<a></a>-->
-                                <span>{{ i.title }}</span>
+                                <!--<a href="{{ url_for('main.post', id=i.id) }}">-->
+                                    <span>{{ i.title }}<a href="{{url_for('main.post', id=i.id)}}"><span class="glyphicon glyphicon-link"></span></a></span>
+                                <!--</a>-->
                             </td>
                             <td>
                                 <span>{{ i.author.username }}</span>
@@ -64,8 +65,8 @@
                             {% if current_user.admin %}
                                 <td>
                                 <!-- <td> -->
-                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a href="{{url_for('main.modifypost', id=i.id)}}"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a href="{{url_for('main.delete', table='posts', id=i.id)}}"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             {% endif %}
                         </tr>
@@ -75,7 +76,7 @@
                         <tr>
                             <td>
                                 <!--<a></a>-->
-                                <span> {{i.user.username}} </span>
+                                <span> {{i.user.username}} <a href="{{url_for('main.post', id=i.post_id)}}"><span class="glyphicon glyphicon-link"></span></a></span>
                             </td>
                             <td>
                                 <span>{{ i.content }}</span>
@@ -84,8 +85,8 @@
                             {% if current_user.admin %}
                                 <td>
                                 <!-- <td> -->
-                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <!--<a href=""><span class="glyphicon glyphicon-edit"></span></a>-->
+                                    <a href="{{url_for('main.delete', table='comments', id=i.id)}}"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             {% endif%}
                         </tr>

@@ -95,7 +95,7 @@ class Post(db.Model):
     content = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    comments = db.relationship('Comment', backref='post', lazy='dynamic', cascade='all, delete-orphan')
     
 
     @staticmethod
@@ -138,7 +138,7 @@ class Comment(db.Model):
         post_count = Post.query.count()
         for i in range(count):
             u = User.query.offset(randint(0,user_count-1)).first()
-            p = Post.query.offset(randint(0,user_count-1)).first()
+            p = Post.query.offset(randint(0,post_count-1)).first()
             c = Comment(user=u, post=p, user_name=u.username,
                     user_image=u.gravator(),content=forgery_py.lorem_ipsum.sentences(randint(3, 10)))
             db.session.add(c)

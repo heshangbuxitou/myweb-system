@@ -12,7 +12,7 @@ import json
 def before_requesg():
     if current_user.is_authenticated:
         current_user.ping()
-        if not current_user.admin and (request.endpoint in ['main.editpost','main.modifypost','main.deletepost']):
+        if not current_user.admin and (request.endpoint in ['main.editpost','main.modifypost','main.delete']):
             print(request.endpoint in ['main.editpost','main.modifypost','main.deletepost'])
             flash('你没有访问的权限!')
             return redirect(url_for('main.index'))

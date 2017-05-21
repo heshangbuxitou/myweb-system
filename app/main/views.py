@@ -66,18 +66,31 @@ def addcomment(id):
     db.session.commit()
     return redirect(url_for('main.post', id=id))
 
-#删除文章
-@main.route('/deletepost/<int:id>')
+#删除资源
+@main.route('/delete/<int:id>')
 @login_required
-def deletepost(id):
-    post = Post.query.get_or_404(id)
-    db.session.delete(post)
-    return redirect(url_for('main.index'))
+def delete(id):
+    table = request.args.get('table')
+    if table == 'users':
+        user = User.query.get_or_404(id)
+        db.session.delete(user)
+        db.session.commit()
+    elif table == 'posts':
+        post = Post.query.get_or_404(id)
+        db.session.delete(post)
+        db.session.commit()
+    else:
+        comment = Comment.query.get_or_404(id)
+        db.session.delete(comment)
+        db.session.commit()
+    return redirect(url_for('main.manage',tablename=table))
 
+#个人介绍
 @main.route('/about')
 def about():
     return render_template('about.html')
 
+#资源管理
 @main.route('/manage/<tablename>')
 def manage(tablename):
     page=request.args.get('page', 1, type=int)

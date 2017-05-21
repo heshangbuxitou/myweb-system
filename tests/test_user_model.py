@@ -13,8 +13,8 @@ class UserModelTestCase(unittest.TestCase):
         db.drop_all()
         db.create_all()
         User.generate_fake()
-        Post.generate_fake(10)
-        Comment.generate_fake()
+        Post.generate_fake(20)
+        Comment.generate_fake(100)
 
     def tearDown(self):
         db.session.remove()
