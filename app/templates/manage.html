@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% import '_macros.html' as macros%}
 {% block title %}Manage{% endblock %}
 
 {% block page_content %}
@@ -18,7 +18,9 @@
                     <th>{% if table[0].email %}名字{% elif table[0].title %}标题{% else %}作者{% endif %}</th>
                     <th>{% if table[0].email %}电子邮箱{% elif table[0].title %}作者{% else %}内容{% endif %}</th>
                     <th class="col-sm-2">创建时间</th>
-                    <th class="col-sm-1">操作</th>
+                    {% if current_user.admin %}
+                        <th class="col-sm-1">操作</th>
+                    {% endif %}
                     <!-- <th class="col-sm-1">操作</th> -->
                 </tr>
             </thead>
@@ -31,14 +33,21 @@
                                 <span>{{ i.username }}</span>
                             </td>
                             <td>
-                                <span>{{ i.email }}</span>
+                                <span>{% if current_user.admin %}
+                                        {{ i.email }}
+                                      {% else %}
+                                        {{ i.email|email_hide }}
+                                      {% endif %}
+                                </span>
                             </td>
                             <td>{{ i.member_since }}</td>
-                            <td>
-                            <!-- <td> -->
-                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
+                            {% if current_user.admin %}
+                                <td>
+                                <!-- <td> -->
+                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 {% elif table[0].title %}
@@ -52,11 +61,13 @@
                                 <span>{{ i.author.username }}</span>
                             </td>
                             <td>{{ i.timestamp }}</td>
-                            <td>
-                            <!-- <td> -->
-                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
+                            {% if current_user.admin %}
+                                <td>
+                                <!-- <td> -->
+                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -70,11 +81,13 @@
                                 <span>{{ i.content }}</span>
                             </td>
                             <td>{{ i.created_at }}</td>
-                            <td>
-                            <!-- <td> -->
-                                <a href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
+                            {% if current_user.admin %}
+                                <td>
+                                <!-- <td> -->
+                                    <a href=""><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            {% endif%}
                         </tr>
                     {% endfor %}
                 {% endif %}
@@ -98,7 +111,13 @@
             </li>
         </ul>
     </nav>-->
-    {% include 'pagination.html' %}
+    {% if table[0].email %}
+        {{ macros.pagination_widget(pagination, 'main.manage', tablename="users")}}
+    {% elif table[0].title %}
+        {{ macros.pagination_widget(pagination, 'main.manage', tablename="posts")}}
+    {% else %}
+        {{ macros.pagination_widget(pagination, 'main.manage', tablename="comments")}}
+    {% endif %}
 </div>
 
 {% endblock %}
