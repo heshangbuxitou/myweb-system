@@ -57,6 +57,10 @@
     </div>
     {% endfor %}
 
+    <a class="btn-lg" id="go-top" href="javascript:void(0);" title="go-top" hidden="hidden" style="display: block;">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </a>
+
     {% block page_content %}{% endblock %}
 </div>
 {% endblock %}
@@ -64,4 +68,5 @@
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
+<script src="{{ url_for('static', filename='js/awesome.js')}}"></script>
 {% endblock %}
