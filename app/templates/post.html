@@ -45,7 +45,7 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading" ></h4>
-                                <small>发表于 {{ comment.created_at }}</small>
+                                <small><font color="#337ab7">{{ comment.user.username}}</font> 发表于 {{ comment.created_at }}</small>
                                 <hr class="divider"/>
                                 <article>
                                     <p>{{ comment.content }}</p>

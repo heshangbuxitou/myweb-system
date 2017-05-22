@@ -18,7 +18,7 @@ class User(UserMixin,db.Model):
     last_seen = db.Column(db.DateTime(), default=datetime.now)
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-    comments = db.relationship('Comment', backref='user', lazy='dynamic')    
+    comments = db.relationship('Comment', backref='user', lazy='dynamic', cascade='all, delete-orphan')    
 
     @property
     def password(self):
