@@ -9,7 +9,7 @@
             <article class="blog-post font_con">
                 <h3 class="blog-post-title"><a href="#">{{ post.title }}</a></h3>
                 <p class="blog-post-meta">发表于 <time>{{ post.timestamp }}</time></p>
-                <p>{{ post.content|safe }}</p>
+                <p>{{ post.content|to_html|safe }}</p>
                 <!--<hr class="divider" />-->
                 {% if current_user.admin %}
                     <span class="pull-right"><a href="{{ url_for('main.modifypost', id=post.id)}}">修改文章</a></span>
@@ -48,7 +48,7 @@
                                 <small><font color="#337ab7">{{ comment.user.username}}</font> 发表于 {{ comment.created_at }}</small>
                                 <hr class="divider"/>
                                 <article>
-                                    <p>{{ comment.content }}</p>
+                                    <p>{{ comment.content|to_html|safe }}</p>
                                 </article>
                             </div>
                         </div>

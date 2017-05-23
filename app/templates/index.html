@@ -17,13 +17,16 @@
                     <h3 class="blog-post-title"><a href="{{ url_for('main.post', id=post.id)}}">{{ post.title }}</a></h3>
                     <p class="blog-post-meta"><small>发表于 {{ post.timestamp }}</small></p>
                     <div class="container-fluid blog-summary cont" >
-                        {{ post.content|safe }}
+                        {{ post.content|to_html|safe }}
+                    </div>
+                    <div class="container-fluid">
+                        <p>...</p>
                     </div>
 
                     <!--{% if current_user.admin %}
                         <span class="pull-right"><a href="{{ url_for('main.delete', id=post.id)}}">删除文章</a></span>
                     {% endif %}-->
-                    <span class="pull-right"><a href="{{ url_for('main.post', id=post.id)}}">阅读更多</a></span>
+                    <span class="pull-right"><a href="{{ url_for('main.post', id=post.id)}}">阅读更多...</a></span>
                 </article>
             {% endfor %}
         </div>

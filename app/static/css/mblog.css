@@ -30,13 +30,16 @@ img {
 } */
 
 .blog-post .cont{
-            height:60px;
+            height:240px;
             line-height: 20px;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 12;
             -webkit-box-orient: vertical;
+}
+
+.blog-post .cont{
 }
 
 #vm-form {
@@ -83,7 +86,7 @@ color: #999;
 }
 
 
-.font_con h3{
+.font_con h3:nth-child(1){
      text-align: center;
 }
 .font_con p:nth-child(2){

@@ -24,7 +24,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.index') }}">Home</a></li>
                 {% if current_user.admin %}
-                    <li><a href="{{ url_for('main.editpost') }}">Editpost</a></li>
+                    <li><a href="{{ url_for('main.editpost') }}">Createpost</a></li>
                 {% endif %}
                 <li><a href="https://github.com/heshangbuxitou/myweb-system">Code</a></li>
                 <li><a href="{{ url_for('main.manage',tablename='users')}}">Manage</a></li>
