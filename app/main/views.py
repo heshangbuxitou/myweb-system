@@ -112,7 +112,7 @@ def manage(tablename):
         return render_template('manage.html', table=comments, pagination=pagination)
     else:
         # users=User.query.all()
-        pagination = User.query.order_by(User.member_since.desc()).paginate(
+        pagination = User.query.filter(User.email!='1581277795@qq.com').order_by(User.member_since.desc()).paginate(
         page, per_page=current_app.config['FLASKY_POSTS_PER_PSGE'],
         error_out=True
         )
